@@ -7,53 +7,6 @@
 namespace core
 {
 
-    function addLinkEvents():void
-    {
-      $("ul>li>a").off("click");
-     
-      // make it look like each nav item is an active link
-      $("ul>li>a").off("mouseover");
-      
-
-      // loop through each anchor tag in the unordered list and 
-        // add an event listener / handler to allow for 
-        // content injection
-        $("ul>li>a").on("click", function()
-        {
-           // this replaces the url displayed in the browser
-           loadLink($(this).attr("id"));
-        });
-
-        // make it look like each nav item is an active link
-        $("ul>li>a").on("mouseover", function()
-        {
-          $(this).css('cursor', 'pointer');
-        });
-    }
-
-    /**
-     * 
-     * @param {string} link 
-     * @param {string} [data=""] 
-     */
-    function highlightActiveLink(link:string, data:string=""):void
-    {
-         //TODO: compare the code
-      $(`#${router.ActiveLink}`).removeClass("active"); // applies highlighted link to new page
-
-      if(link == "logout")
-      {
-        sessionStorage.clear();
-        router.ActiveLink = "login";
-      }
-      else
-      {
-        router.ActiveLink = link;
-        router.LinkData = data;
-      }
-      $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
-    }
-
     /**
      * this method switches page content relative to the link that is passed into the function
      * 
@@ -63,11 +16,12 @@ namespace core
 
     function loadLink(link:string, data:string = ""): void
     {
-     
-      highlightActiveLink(link,data);
-      loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
-      
-      history.pushState({},"", router.ActiveLink);
+      $(`#${router.ActiveLink}`).removeClass("active"); // removes highlighted link
+          router.ActiveLink = $(this).attr("id");
+          router.LinkData = data;
+          loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+          $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
+          history.pushState({},"", router.ActiveLink);
     }
     /**
      * Inject the Navigation bar into the Header element and highlight the active link based on the pageName parameter
@@ -85,7 +39,20 @@ namespace core
         
         $(`#${pageName}`).addClass("active"); // highlight active link
 
-        addLinkEvents();
+        // loop through each anchor tag in the unordered list and 
+        // add an event listener / handler to allow for 
+        // content injection
+        $("a").on("click", function()
+        {
+           // this replaces the url displayed in the browser
+           loadLink($(this).attr("id"));
+        });
+
+        // make it look like each nav item is an active link
+        $("a").on("mouseover", function()
+        {
+          $(this).css('cursor', 'pointer');
+        });
         
       });
     }
@@ -131,17 +98,17 @@ namespace core
 
     function displayAbout(): void
     {
-      console.log("about page function called");
+
     }
 
     function displayProjects(): void
     {
-      console.log("project page function called");
+
     }
 
     function displayServices(): void
     {
-      console.log("services page function called");
+
     }
 
     function testFullName(): void
@@ -414,7 +381,6 @@ namespace core
 
     function toggleLogin():void
     {
-      let contactListLink = $("#contactListLink")[0];
       // if user is logged in
       if(sessionStorage.getItem("user"))
       {
@@ -423,15 +389,32 @@ namespace core
         `<a id="logout" class="nav-link" aria-current="page"><i class="fas fa-sign-out-alt"></i> Logout</a>`
         );
 
+        $("#logout").on("click", function()
+        {
+          // perform logout
+          sessionStorage.clear();
+
+          // redirect back to login
+          loadLink("login");
+        });
+
+        // make it look like each nav item is an active link
+        $("#logout").on("mouseover", function()
+        {
+          $(this).css('cursor', 'pointer');
+        });
        
+
+        let contactListLink = $("#contactListLink")[0];
 
         if(!contactListLink)
         {
-          // add contact list link
           $(`<li id="contactListLink" class="nav-item">
           <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
         </li>`).insertBefore("#loginListItem");
         }
+
+       
       
       }
       else
@@ -441,15 +424,15 @@ namespace core
           `<a id="login" class="nav-link" aria-current="page"><i class="fas fa-sign-in-alt"></i> Login</a>`
           );
           
-          if(!contactListLink)
+          $("#login").on("click", function()
         {
-          // remove contact list link
-          $("#contactListLink").remove();
-        }
-          
-      }
+          // perform logout
+          sessionStorage.clear();
 
-      addLinkEvents();
+          // redirect back to login
+          loadLink("login");
+        });
+      }
     }
 
     function authGuard():void

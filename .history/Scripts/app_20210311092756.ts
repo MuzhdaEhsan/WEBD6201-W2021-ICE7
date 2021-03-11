@@ -32,15 +32,14 @@ namespace core
     }
 
     /**
+     * this method switches page content relative to the link that is passed into the function
      * 
      * @param {string} link 
-     * @param {string} [data=""] 
+     * @param {string} [data =""]
      */
-    function highlightActiveLink(link:string, data:string=""):void
-    {
-         //TODO: compare the code
-      $(`#${router.ActiveLink}`).removeClass("active"); // applies highlighted link to new page
 
+    function loadLink(link:string, data:string = ""): void
+    {
       if(link == "logout")
       {
         sessionStorage.clear();
@@ -51,22 +50,10 @@ namespace core
         router.ActiveLink = link;
         router.LinkData = data;
       }
-      $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
-    }
 
-    /**
-     * this method switches page content relative to the link that is passed into the function
-     * 
-     * @param {string} link 
-     * @param {string} [data =""]
-     */
-
-    function loadLink(link:string, data:string = ""): void
-    {
-     
-      highlightActiveLink(link,data);
-      loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
       
+      loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+      $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
       history.pushState({},"", router.ActiveLink);
     }
     /**

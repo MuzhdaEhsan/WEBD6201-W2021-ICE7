@@ -31,12 +31,7 @@ namespace core
         });
     }
 
-    /**
-     * 
-     * @param {string} link 
-     * @param {string} [data=""] 
-     */
-    function highlightActiveLink(link:string, data:string=""):void
+    function highlightActiveLink(link:string):void
     {
          //TODO: compare the code
       $(`#${router.ActiveLink}`).removeClass("active"); // applies highlighted link to new page
@@ -64,7 +59,7 @@ namespace core
     function loadLink(link:string, data:string = ""): void
     {
      
-      highlightActiveLink(link,data);
+      
       loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
       
       history.pushState({},"", router.ActiveLink);

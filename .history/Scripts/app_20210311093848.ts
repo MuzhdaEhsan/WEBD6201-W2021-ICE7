@@ -31,11 +31,6 @@ namespace core
         });
     }
 
-    /**
-     * 
-     * @param {string} link 
-     * @param {string} [data=""] 
-     */
     function highlightActiveLink(link:string, data:string=""):void
     {
          //TODO: compare the code

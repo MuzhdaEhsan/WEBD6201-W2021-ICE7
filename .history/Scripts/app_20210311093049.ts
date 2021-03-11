@@ -32,13 +32,15 @@ namespace core
     }
 
     /**
+     * this method switches page content relative to the link that is passed into the function
      * 
      * @param {string} link 
-     * @param {string} [data=""] 
+     * @param {string} [data =""]
      */
-    function highlightActiveLink(link:string, data:string=""):void
+
+    function loadLink(link:string, data:string = ""): void
     {
-         //TODO: compare the code
+      //TODO: a line is missing here, add it 
       $(`#${router.ActiveLink}`).removeClass("active"); // applies highlighted link to new page
 
       if(link == "logout")
@@ -52,19 +54,7 @@ namespace core
         router.LinkData = data;
       }
       $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
-    }
-
-    /**
-     * this method switches page content relative to the link that is passed into the function
-     * 
-     * @param {string} link 
-     * @param {string} [data =""]
-     */
-
-    function loadLink(link:string, data:string = ""): void
-    {
-     
-      highlightActiveLink(link,data);
+      
       loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
       
       history.pushState({},"", router.ActiveLink);

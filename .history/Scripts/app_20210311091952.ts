@@ -32,29 +32,6 @@ namespace core
     }
 
     /**
-     * 
-     * @param {string} link 
-     * @param {string} [data=""] 
-     */
-    function highlightActiveLink(link:string, data:string=""):void
-    {
-         //TODO: compare the code
-      $(`#${router.ActiveLink}`).removeClass("active"); // applies highlighted link to new page
-
-      if(link == "logout")
-      {
-        sessionStorage.clear();
-        router.ActiveLink = "login";
-      }
-      else
-      {
-        router.ActiveLink = link;
-        router.LinkData = data;
-      }
-      $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
-    }
-
-    /**
      * this method switches page content relative to the link that is passed into the function
      * 
      * @param {string} link 
@@ -63,11 +40,20 @@ namespace core
 
     function loadLink(link:string, data:string = ""): void
     {
-     
-      highlightActiveLink(link,data);
-      loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+      if(link == "logout")
+      {
+        sessionStorage.clear();
+        router.ActiveLink = "login";
+      }
+      else{
+        router.ActiveLink = link;
+        router.LinkData = data;
+      }
+
       
-      history.pushState({},"", router.ActiveLink);
+          loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
+          $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
+          history.pushState({},"", router.ActiveLink);
     }
     /**
      * Inject the Navigation bar into the Header element and highlight the active link based on the pageName parameter
@@ -414,7 +400,6 @@ namespace core
 
     function toggleLogin():void
     {
-      let contactListLink = $("#contactListLink")[0];
       // if user is logged in
       if(sessionStorage.getItem("user"))
       {
@@ -423,7 +408,10 @@ namespace core
         `<a id="logout" class="nav-link" aria-current="page"><i class="fas fa-sign-out-alt"></i> Logout</a>`
         );
 
+        
        
+
+        let contactListLink = $("#contactListLink")[0];
 
         if(!contactListLink)
         {
@@ -432,6 +420,8 @@ namespace core
           <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
         </li>`).insertBefore("#loginListItem");
         }
+
+       
       
       }
       else
@@ -441,11 +431,6 @@ namespace core
           `<a id="login" class="nav-link" aria-current="page"><i class="fas fa-sign-in-alt"></i> Login</a>`
           );
           
-          if(!contactListLink)
-        {
-          // remove contact list link
-          $("#contactListLink").remove();
-        }
           
       }
 
