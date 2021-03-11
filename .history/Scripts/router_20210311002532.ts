@@ -104,7 +104,7 @@ router.AddTable(["/",
                 
 let route = location.pathname; // alias for location.pathname
 
-//console.log(route);
+console.log(route);
 console.log(route);
 
 
