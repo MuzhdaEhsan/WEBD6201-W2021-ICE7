@@ -12,16 +12,6 @@ namespace core
             this.ActiveLink = "";
         }
 
-        get LinkData():string
-        {
-            return this.m_linkData;
-        }
-
-        set LinkData(data:string)
-        {
-            this.m_linkData = data;
-        }
-
         // Public Properties (getters and setters)
         get ActiveLink() :string
         {

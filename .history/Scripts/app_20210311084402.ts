@@ -8,7 +8,6 @@ namespace core
 {
 
     /**
-     * this method switches page content relative to the link that is passed into the function
      * 
      * @param {string} link 
      * @param {string} [data =""]
@@ -18,7 +17,6 @@ namespace core
     {
       $(`#${router.ActiveLink}`).removeClass("active"); // removes highlighted link
           router.ActiveLink = $(this).attr("id");
-          router.LinkData = data;
           loadContent(router.ActiveLink, ActiveLinkCallBack(router.ActiveLink));
           $(`#${router.ActiveLink}`).addClass("active"); // applies highlighted link to new page
           history.pushState({},"", router.ActiveLink);
@@ -240,7 +238,7 @@ namespace core
 
         $("button.edit").on("click", function(){
           //TODO: fix this issue 
-          loadLink("edit", $(this).val().toString());
+          location.href = "/edit#" + $(this).val();
          });
 
          $("button.delete").on("click", function(){
@@ -260,7 +258,7 @@ namespace core
 
     function displayEdit(): void
     {
-      let key = router.LinkData;
+      let key = location.hash.substring(1);
 
       let contact = new core.Contact();
 

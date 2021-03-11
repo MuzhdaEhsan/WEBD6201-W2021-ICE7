@@ -5,6 +5,12 @@ var core;
         constructor() {
             this.ActiveLink = "";
         }
+        get LinkData() {
+            return this.m_linkData;
+        }
+        set LinkData(data) {
+            this.m_linkData = data;
+        }
         get ActiveLink() {
             return this.m_activeLink;
         }
@@ -45,6 +51,7 @@ router.AddTable(["/",
     "/login",
     "/edit"]);
 let route = location.pathname;
+console.log(route);
 if (router.Find(route) > -1) {
     router.ActiveLink = (route == "/") ? "home" : route.substring(1);
 }
