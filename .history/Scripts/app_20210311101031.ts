@@ -1,6 +1,6 @@
 /** Muzhda Ehsan
- * ICE7
- * 2021-Mar-11
+ * ICE6
+ * 2021-Mar-06
  */
 
 
@@ -9,8 +9,9 @@ namespace core
 
     function addLinkEvents():void
     {
-      // remove the events
       $("ul>li>a").off("click");
+     
+      // make it look like each nav item is an active link
       $("ul>li>a").off("mouseover");
       
 
@@ -37,10 +38,8 @@ namespace core
      */
     function highlightActiveLink(link:string):void
     {
-         //TODO: compare the code with github code
-
-         // swap the active link
-      $(`#${router.ActiveLink}`).removeClass("active"); // remove highlighted link to new page
+         //TODO: compare the code
+      $(`#${router.ActiveLink}`).removeClass("active"); // applies highlighted link to new page
 
       if(link == "logout")
       {
@@ -91,7 +90,7 @@ namespace core
         addLinkEvents();
 
         //TODO: add somelines here
-       // highlightActiveLink();
+        highlightActiveLink();
         
       });
     }
@@ -447,7 +446,7 @@ namespace core
           `<a id="login" class="nav-link" aria-current="page"><i class="fas fa-sign-in-alt"></i> Login</a>`
           );
           
-          if(contactListLink)
+          if(!contactListLink)
         {
           // remove contact list link
           $("#contactListLink").remove();
@@ -456,7 +455,7 @@ namespace core
       }
 
       addLinkEvents();
-      highlightActiveLink(router.ActiveLink);
+
       
     }
 

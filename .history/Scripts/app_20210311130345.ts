@@ -447,7 +447,7 @@ namespace core
           `<a id="login" class="nav-link" aria-current="page"><i class="fas fa-sign-in-alt"></i> Login</a>`
           );
           
-          if(contactListLink)
+          if(!contactListLink)
         {
           // remove contact list link
           $("#contactListLink").remove();
@@ -456,7 +456,7 @@ namespace core
       }
 
       addLinkEvents();
-      highlightActiveLink(router.ActiveLink);
+
       
     }
 
